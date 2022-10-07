@@ -10,4 +10,5 @@ export type GridFilterInputValueProps<Api extends GridApiCommon = GridApiCommuni
   // Is any because if typed as GridApiRef a dep cycle occurs. Same happens if ApiContext is used.
   apiRef: React.MutableRefObject<Api>;
   focusElementRef?: React.Ref<any>;
+  dateType: 'date' | 'time' | 'dateTime';
 } & Pick<TextFieldProps, 'color' | 'error' | 'helperText' | 'size' | 'variant'>;
