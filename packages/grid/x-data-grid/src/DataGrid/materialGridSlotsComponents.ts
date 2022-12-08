@@ -1,7 +1,9 @@
+import MUICheckbox from '@mui/material/Checkbox';
 import MUITextField from '@mui/material/TextField';
 import MUIFormControl from '@mui/material/FormControl';
 import MUISelect from '@mui/material/Select';
 import MUISwitch from '@mui/material/Switch';
+import MUIButton from '@mui/material/Button';
 import MUITooltip from '@mui/material/Tooltip';
 import MUIPopper from '@mui/material/Popper';
 import { GridIconSlotsComponent, GridSlotsComponent } from '../models';
@@ -19,6 +21,7 @@ import {
   GridFilterListIcon,
   GridFilterPanel,
   GridFooter,
+  GridHeader,
   GridLoadingOverlay,
   GridNoRowsOverlay,
   GridPagination,
@@ -43,9 +46,7 @@ import {
 import { GridColumnUnsortedIcon } from '../components/columnHeaders/GridColumnUnsortedIcon';
 import { GridErrorOverlay } from '../components/GridErrorOverlay';
 import { GridNoResultsOverlay } from '../components/GridNoResultsOverlay';
-import { DefaultGridRootStyles } from '../DataGridUnstyled/DefaultGridRootStyles';
-import { BaseCheckbox } from '../DataGridUnstyled/components/BaseCheckbox';
-import { BaseButton } from '../DataGridUnstyled/components/BaseButton';
+import { MaterialGridRootStyles } from './components/MaterialGridRootStyles';
 
 const DEFAULT_GRID_ICON_SLOTS_COMPONENTS: GridIconSlotsComponent = {
   BooleanCellTrueIcon: GridCheckIcon,
@@ -80,12 +81,12 @@ const DEFAULT_GRID_ICON_SLOTS_COMPONENTS: GridIconSlotsComponent = {
  */
 export const DATA_GRID_DEFAULT_SLOTS_COMPONENTS: GridSlotsComponent = {
   ...DEFAULT_GRID_ICON_SLOTS_COMPONENTS,
-  BaseCheckbox,
-  BaseButton,
+  BaseCheckbox: MUICheckbox,
   BaseTextField: MUITextField,
   BaseFormControl: MUIFormControl,
   BaseSelect: MUISelect,
   BaseSwitch: MUISwitch,
+  BaseButton: MUIButton,
   BaseTooltip: MUITooltip,
   BasePopper: MUIPopper,
   Cell: GridCell,
@@ -94,6 +95,7 @@ export const DATA_GRID_DEFAULT_SLOTS_COMPONENTS: GridSlotsComponent = {
   ColumnMenu: GridColumnMenu,
   ErrorOverlay: GridErrorOverlay,
   Footer: GridFooter,
+  Header: GridHeader,
   Toolbar: null,
   PreferencesPanel: GridPreferencesPanel,
   LoadingOverlay: GridLoadingOverlay,
@@ -104,5 +106,5 @@ export const DATA_GRID_DEFAULT_SLOTS_COMPONENTS: GridSlotsComponent = {
   ColumnsPanel: GridColumnsPanel,
   Panel: GridPanel,
   Row: GridRow,
-  RootStyles: DefaultGridRootStyles,
+  RootStyles: MaterialGridRootStyles,
 };
