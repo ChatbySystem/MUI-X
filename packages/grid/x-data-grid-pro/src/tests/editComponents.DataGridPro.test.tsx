@@ -8,6 +8,7 @@ import {
   renderEditBooleanCell,
   renderEditDateCell,
   renderEditInputCell,
+  renderEditMultipleSelectCell,
   renderEditSingleSelectCell,
 } from '@mui/x-data-grid-pro';
 import { act, createRenderer, fireEvent, screen, userEvent } from '@mui/monorepo/test/utils';
@@ -596,6 +597,158 @@ describe('<DataGridPro /> - Edit Components', () => {
 
       resolveCallback!();
       await act(() => Promise.resolve());
+    });
+  });
+
+  describe('column type: multipleSelect', () => {
+    beforeEach(() => {
+      defaultData.rows = [{ id: 0, brand: ['Nike'] }];
+      defaultData.columns = [
+        {
+          field: 'brand',
+          type: 'multipleSelect',
+          valueOptions: ['Nike', 'Adidas'],
+          editable: true,
+        },
+      ];
+    });
+
+    it('should call setEditCellValue with the correct value when valueOptions is an array of strings', () => {
+      render(<TestCase />);
+      const spiedSetEditCellValue = spy(apiRef.current, 'setEditCellValue');
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[1]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: ['Nike', 'Adidas'],
+      });
+
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[0]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: ['Adidas'],
+      });
+    });
+
+    it('should call setEditCellValue with the correct value when valueOptions is an array of objects', () => {
+      defaultData.rows = [{ id: 0, brand: [0] }];
+      defaultData.columns = [
+        {
+          field: 'brand',
+          type: 'multipleSelect',
+          valueOptions: [
+            { value: 0, label: 'Nike' },
+            { value: 1, label: 'Adidas' },
+          ],
+          editable: true,
+        },
+      ];
+      render(<TestCase />);
+      const spiedSetEditCellValue = spy(apiRef.current, 'setEditCellValue');
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[1]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: [0, 1],
+      });
+
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[0]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: [1],
+      });
+    });
+
+    it('should call setEditCellValue with the correct value when valueOptions is a function', () => {
+      defaultData.columns = [
+        {
+          field: 'brand',
+          type: 'multipleSelect',
+          valueOptions: () => ['Nike', 'Adidas'],
+          editable: true,
+        },
+      ];
+      render(<TestCase />);
+      const spiedSetEditCellValue = spy(apiRef.current, 'setEditCellValue');
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[1]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: ['Nike', 'Adidas'],
+      });
+
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[0]);
+
+      expect(spiedSetEditCellValue.lastCall.args[0]).to.deep.equal({
+        id: 0,
+        field: 'brand',
+        value: ['Adidas'],
+      });
+    });
+
+    it('should apply getOptionLabel to the options provided', () => {
+      defaultData.columns[0].renderEditCell = (params) => {
+        return renderEditMultipleSelectCell({
+          ...params,
+          getOptionLabel: (value) => (value as string).toLowerCase(),
+        });
+      };
+      render(<TestCase />);
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+
+      expect(screen.queryAllByRole('option')[0]).to.have.text('nike');
+      expect(screen.queryAllByRole('option')[1]).to.have.text('adidas');
+    });
+
+    it('should pass the value prop to the select', async () => {
+      render(<TestCase />);
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+
+      expect(cell.textContent!.replace(/[\W]+/, '')).to.equal('Nike'); // We use .replace to remove &ZeroWidthSpace;
+      await act(() =>
+        apiRef.current.setEditCellValue({ id: 0, field: 'brand', value: ['Adidas'] }),
+      );
+      expect(cell.textContent!.replace(/[\W]+/, '')).to.equal('Adidas');
+    });
+
+    it('should call onValueChange if defined', async () => {
+      const onValueChange = spy();
+
+      defaultData.columns[0].renderEditCell = (params) =>
+        renderEditMultipleSelectCell({ ...params, onValueChange });
+
+      render(<TestCase />);
+
+      const cell = getCell(0, 0);
+      fireEvent.doubleClick(cell);
+      fireEvent.click(screen.queryAllByRole('option')[1]);
+      await Promise.resolve();
+
+      expect(onValueChange.callCount).to.equal(1);
+      expect(onValueChange.lastCall.args[1]).to.deep.equal(['Nike', 'Adidas']);
     });
   });
 

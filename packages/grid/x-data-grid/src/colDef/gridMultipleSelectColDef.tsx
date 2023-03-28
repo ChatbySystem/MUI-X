@@ -4,22 +4,22 @@ import {
   isArrayOfObjects,
 } from './gridSelectColDefUtils';
 import { GRID_STRING_COL_DEF } from './gridStringColDef';
-import { GridSingleSelectColDef, ValueOptions } from '../models/colDef/gridColDef';
-import { renderEditSingleSelectCell } from '../components/cell/GridEditSingleSelectCell';
-import { getGridSingleSelectOperators } from './gridSingleSelectOperators';
-import { isSingleSelectColDef } from '../components/panel/filterPanel/filterPanelUtils';
+import { GridMultipleSelectColDef, ValueOptions } from '../models/colDef/gridColDef';
+import { renderEditMultipleSelectCell } from '../components/cell/GridEditMultipleSelectCell';
+import { getGridMultipleSelectOperators } from './gridMultipleSelectOperators';
+import { isMultipleSelectColDef } from '../components/panel/filterPanel/filterPanelUtils';
 
-export const GRID_SINGLE_SELECT_COL_DEF: Omit<GridSingleSelectColDef, 'field'> = {
+export const GRID_MULTIPLE_SELECT_COL_DEF: Omit<GridMultipleSelectColDef, 'field'> = {
   ...GRID_STRING_COL_DEF,
-  type: 'singleSelect',
+  type: 'multipleSelect',
   getOptionLabel: defaultGetOptionLabel,
   getOptionValue: defaultGetOptionValue,
   valueFormatter(params) {
     const { id, field, value, api } = params;
     const colDef = params.api.getColumn(field);
 
-    if (!isSingleSelectColDef(colDef)) {
-      return '';
+    if (!isMultipleSelectColDef(colDef)) {
+      return [];
     }
 
     let valueOptions: Array<ValueOptions>;
@@ -30,7 +30,7 @@ export const GRID_SINGLE_SELECT_COL_DEF: Omit<GridSingleSelectColDef, 'field'> =
     }
 
     if (value == null) {
-      return '';
+      return [];
     }
 
     if (!valueOptions) {
@@ -44,6 +44,7 @@ export const GRID_SINGLE_SELECT_COL_DEF: Omit<GridSingleSelectColDef, 'field'> =
     const valueOption = valueOptions.find((option) => colDef.getOptionValue!(option) === value);
     return valueOption ? colDef.getOptionLabel!(valueOption) : '';
   },
-  renderEditCell: renderEditSingleSelectCell,
-  filterOperators: getGridSingleSelectOperators(),
+  renderCell: (params) => (Array.isArray(params.value) ? params.value.join(', ') : params.value),
+  renderEditCell: renderEditMultipleSelectCell,
+  filterOperators: getGridMultipleSelectOperators(),
 };
