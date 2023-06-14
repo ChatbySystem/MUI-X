@@ -1,9 +1,13 @@
+import MUIBadge from '@mui/material/Badge';
 import MUICheckbox from '@mui/material/Checkbox';
 import MUITextField from '@mui/material/TextField';
 import MUIFormControl from '@mui/material/FormControl';
 import MUISelect from '@mui/material/Select';
 import MUISwitch from '@mui/material/Switch';
 import MUIButton from '@mui/material/Button';
+import MUIListItemIcon from '@mui/material/ListItemIcon';
+import MUIMenuList from '@mui/material/MenuList';
+import MUIMenuItem from '@mui/material/MenuItem';
 import MUIIconButton from '@mui/material/IconButton';
 import MUIInputAdornment from '@mui/material/InputAdornment';
 import MUITooltip from '@mui/material/Tooltip';
@@ -82,9 +86,13 @@ const iconSlots: GridIconSlotsComponent = {
 
 const materialSlots: GridBaseSlots & GridIconSlotsComponent = {
   ...iconSlots,
+  BaseBadge: MUIBadge,
   BaseCheckbox: MUICheckbox,
   BaseTextField: MUITextField,
   BaseFormControl: MUIFormControl,
+  BaseListItemIcon: MUIListItemIcon,
+  BaseMenuList: MUIMenuList,
+  BaseMenuItem: MUIMenuItem,
   BaseSelect: MUISelect,
   BaseSwitch: MUISwitch,
   BaseButton: MUIButton,

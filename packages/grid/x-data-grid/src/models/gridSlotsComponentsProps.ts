@@ -6,6 +6,8 @@ import { SelectProps } from '@mui/material/Select';
 import { SwitchProps } from '@mui/material/Switch';
 import { ButtonProps } from '@mui/material/Button';
 import { IconButtonProps } from '@mui/material/IconButton';
+import { ListItemIconProps } from '@mui/material/ListItemIcon';
+import { MenuItemProps } from '@mui/material/MenuItem';
 import { TooltipProps } from '@mui/material/Tooltip';
 import type { InputLabelProps } from '@mui/material/InputLabel';
 import { PopperProps } from '@mui/material/Popper';
@@ -30,6 +32,8 @@ export interface BaseSelectPropsOverrides {}
 export interface BaseSwitchPropsOverrides {}
 export interface BaseButtonPropsOverrides {}
 export interface BaseIconButtonPropsOverrides {}
+export interface BaseListItemIconPropsOverrides {}
+export interface BaseMenuItemPropsOverrides {}
 export interface BaseTooltipPropsOverrides {}
 export interface BasePopperPropsOverrides {}
 export interface BaseInputLabelPropsOverrides {}
@@ -63,6 +67,8 @@ export interface GridSlotsComponentsProps {
   baseSwitch?: SlotProps<SwitchProps, BaseSwitchPropsOverrides>;
   baseButton?: SlotProps<ButtonProps, BaseButtonPropsOverrides>;
   baseIconButton?: SlotProps<IconButtonProps, BaseIconButtonPropsOverrides>;
+  baseListItemIcon?: SlotProps<ListItemIconProps, BaseListItemIconPropsOverrides>;
+  baseMenuItem?: SlotProps<MenuItemProps, BaseMenuItemPropsOverrides>;
   basePopper?: SlotProps<PopperProps, BasePopperPropsOverrides>;
   baseTooltip?: SlotProps<TooltipProps, BaseTooltipPropsOverrides>;
   baseInputLabel?: SlotProps<InputLabelProps, BaseInputLabelPropsOverrides>;

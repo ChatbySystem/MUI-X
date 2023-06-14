@@ -44,6 +44,16 @@ export interface GridBaseSlots {
    */
   BaseButton: React.JSXElementConstructor<any>;
   /**
+   * The custom MenuItem component used in the grid.
+   * @default MenuItem
+   */
+  BaseMenuItem: React.JSXElementConstructor<any>;
+  /**
+   * The custom ListItemIcon component used in the grid.
+   * @default ListItemIcon
+   */
+  BaseListItemIcon: React.JSXElementConstructor<any>;
+  /**
    * The custom IconButton component used in the grid.
    * @default IconButton
    */
