@@ -10,6 +10,9 @@ import MUITooltip from '@mui/material/Tooltip';
 import MUIPopper from '@mui/material/Popper';
 import MUIInputLabel from '@mui/material/InputLabel';
 import MUIChip from '@mui/material/Chip';
+import MUIMenuItem from '@mui/material/MenuItem';
+import MUIListItemIcon from '@mui/material/ListItemIcon';
+import MUIListItemText from '@mui/material/ListItemText';
 import { GridColumnUnsortedIcon } from './icons/GridColumnUnsortedIcon';
 import {
   GridAddIcon,
@@ -41,6 +44,7 @@ import {
 import type { GridIconSlotsComponent } from '../models';
 import type { GridBaseSlots } from '../models/gridSlotsComponent';
 import MUISelectOption from './components/MUISelectOption';
+import MUIMenu from './components/MUIMenu';
 
 const iconSlots: GridIconSlotsComponent = {
   BooleanCellTrueIcon: GridCheckIcon,
@@ -95,6 +99,10 @@ const materialSlots: GridBaseSlots & GridIconSlotsComponent = {
   BaseInputLabel: MUIInputLabel,
   BaseSelectOption: MUISelectOption,
   BaseChip: MUIChip,
+  BaseMenu: MUIMenu,
+  BaseMenuItem: MUIMenuItem,
+  BaseListItemIcon: MUIListItemIcon,
+  BaseListItemText: MUIListItemText,
 };
 
 export default materialSlots;

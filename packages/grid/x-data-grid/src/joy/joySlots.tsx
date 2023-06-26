@@ -12,6 +12,11 @@ import JoySelect, { SelectProps as JoySelectProps } from '@mui/joy/Select';
 import JoyOption, { OptionProps as JoyOptionProps } from '@mui/joy/Option';
 import JoyBox from '@mui/joy/Box';
 import JoyTypography from '@mui/joy/Typography';
+import JoyMenu from '@mui/joy/Menu';
+import JoyMenuItem from '@mui/joy/MenuItem';
+import JoyListItemDecorator from '@mui/joy/ListItemDecorator';
+// eslint-disable-next-line no-restricted-imports
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 import { unstable_useForkRef as useForkRef } from '@mui/utils';
 import joyIconSlots, { GridKeyboardArrowRight, GridKeyboardArrowLeft } from './icons';
 import type { UncapitalizeObjectKeys } from '../internals/utils';
@@ -294,6 +299,21 @@ const InputLabel = React.forwardRef<
   return <JoyFormLabel {...props} ref={ref} sx={sx as SxProps<Theme>} />;
 });
 
+const FormControl = React.forwardRef<
+  HTMLDivElement,
+  NonNullable<GridSlotsComponentsProps['baseFormControl']>
+>(({ size, color, sx, fullWidth, ...props }, ref) => {
+  return (
+    <JoyFormControl
+      {...props}
+      sx={sx as SxProps<Theme>}
+      color={convertColor(color)}
+      size={convertSize(size)}
+      ref={ref}
+    />
+  );
+});
+
 function labelDisplayedRows({ from, to, count }: { from: number; to: number; count: number }) {
   return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
 }
@@ -405,6 +425,22 @@ const Pagination = React.forwardRef<
   );
 });
 
+const Menu = React.forwardRef<HTMLDivElement, NonNullable<GridSlotsComponentsProps['baseMenu']>>(
+  ({ sx, target, onClickAway, onExited, ...props }, ref) => {
+    return (
+      <ClickAwayListener
+        onClickAway={(event) => {
+          onClickAway?.(event);
+          onExited?.();
+        }}
+        mouseEvent="onMouseDown"
+      >
+        <JoyMenu {...props} anchorEl={target} ref={ref} sx={sx as SxProps<Theme>} />
+      </ClickAwayListener>
+    );
+  },
+);
+
 const joySlots: UncapitalizeObjectKeys<Partial<GridSlotsComponent>> = {
   ...joyIconSlots,
   baseCheckbox: Checkbox,
@@ -415,7 +451,11 @@ const joySlots: UncapitalizeObjectKeys<Partial<GridSlotsComponent>> = {
   baseSelect: Select,
   baseSelectOption: Option,
   baseInputLabel: InputLabel,
-  baseFormControl: JoyFormControl,
+  baseFormControl: FormControl,
+  baseMenu: Menu,
+  baseMenuItem: JoyMenuItem,
+  baseListItemIcon: JoyListItemDecorator,
+  baseListItemText: React.Fragment,
   // BaseTooltip: MUITooltip,
   // BasePopper: MUIPopper,
   pagination: Pagination,

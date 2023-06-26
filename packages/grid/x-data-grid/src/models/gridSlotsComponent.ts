@@ -64,6 +64,11 @@ export interface GridBaseSlots {
    */
   BaseInputLabel: React.JSXElementConstructor<any>;
   /**
+   * The custom component rendered for menu.
+   * @default Menu
+   */
+  BaseMenu: React.JSXElementConstructor<any>;
+  /**
    * The custom SelectOption component used in the grid.
    * @default MenuItem
    */
@@ -81,6 +86,21 @@ export interface GridSlotsComponent extends GridBaseSlots, GridIconSlotsComponen
    * @default Chip
    */
   BaseChip: React.JSXElementConstructor<any>;
+  /**
+   * The custom menu item component used in the grid.
+   * @default MenuItem
+   */
+  BaseMenuItem: React.JSXElementConstructor<any>;
+  /**
+   * The custom list item icon component used in the grid.
+   * @default ListItemIcon
+   */
+  BaseListItemIcon: React.JSXElementConstructor<any>;
+  /**
+   * The custom list item text component used in the grid.
+   * @default ListItemText
+   */
+  BaseListItemText: React.JSXElementConstructor<any>;
   /**
    * Component rendered for each cell.
    * @default GridCell
