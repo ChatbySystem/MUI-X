@@ -26,6 +26,7 @@ import {
 } from '../ChartsLegend';
 import { ChartsAxisHighlight, ChartsAxisHighlightProps } from '../ChartsAxisHighlight';
 import { ChartsAxisSlotsComponent, ChartsAxisSlotComponentProps } from '../models/axis';
+import OnClickHandler from '../OnClickHandler';
 
 export interface ScatterChartSlotsComponent
   extends ChartsAxisSlotsComponent,
@@ -58,6 +59,7 @@ export interface ScatterChartProps
    * @default {}
    */
   slotProps?: ScatterChartSlotComponentProps;
+  onClick?: (event: any, series: any, itemData: any) => void;
 }
 
 /**
@@ -90,6 +92,7 @@ const ScatterChart = React.forwardRef(function ScatterChart(props: ScatterChartP
     children,
     slots,
     slotProps,
+    onClick,
   } = props;
   return (
     <ResponsiveChartContainer
@@ -115,6 +118,7 @@ const ScatterChart = React.forwardRef(function ScatterChart(props: ScatterChartP
       <ChartsLegend {...legend} slots={slots} slotProps={slotProps} />
       <ChartsAxisHighlight x="none" y="none" {...axisHighlight} />
       <ChartsTooltip trigger="item" {...tooltip} />
+      <OnClickHandler trigger="item" onClick={onClick} />
       {children}
     </ResponsiveChartContainer>
   );
@@ -245,6 +249,7 @@ ScatterChart.propTypes = {
     right: PropTypes.number,
     top: PropTypes.number,
   }),
+  onClick: PropTypes.func,
   /**
    * Indicate which axis to display the right of the charts.
    * Can be a string (the id of the axis) or an object `ChartsYAxisProps`.

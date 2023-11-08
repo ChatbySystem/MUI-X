@@ -32,6 +32,7 @@ import {
   LineHighlightPlotSlotsComponent,
   LineHighlightPlotSlotComponentProps,
 } from './LineHighlightPlot';
+import OnClickHandler from '../OnClickHandler';
 
 export interface LineChartSlotsComponent
   extends ChartsAxisSlotsComponent,
@@ -81,6 +82,7 @@ export interface LineChartProps
    * @default {}
    */
   slotProps?: LineChartSlotComponentProps;
+  onClick?: (event: MouseEvent, series: any, itemData: any) => void;
 }
 
 /**
@@ -115,6 +117,7 @@ const LineChart = React.forwardRef(function LineChart(props: LineChartProps, ref
     children,
     slots,
     slotProps,
+    onClick,
   } = props;
 
   const id = useId();
@@ -167,6 +170,7 @@ const LineChart = React.forwardRef(function LineChart(props: LineChartProps, ref
       <MarkPlot slots={slots} slotProps={slotProps} />
       <LineHighlightPlot slots={slots} slotProps={slotProps} />
       <ChartsLegend {...legend} slots={slots} slotProps={slotProps} />
+      <OnClickHandler trigger={tooltip?.trigger} onClick={onClick} />
       <ChartsTooltip {...tooltip} slots={slots} slotProps={slotProps} />
       <ChartsClipPath id={clipPathId} />
       {children}
@@ -310,6 +314,7 @@ LineChart.propTypes = {
     right: PropTypes.number,
     top: PropTypes.number,
   }),
+  onClick: PropTypes.func,
   /**
    * Indicate which axis to display the right of the charts.
    * Can be a string (the id of the axis) or an object `ChartsYAxisProps`.
