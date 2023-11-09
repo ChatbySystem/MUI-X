@@ -23,9 +23,7 @@ export const getGridStringQuickFilterFn = tagInternalFilter(
   },
 );
 
-export const getGridStringOperators = (
-  disableTrim: boolean = false,
-): GridFilterOperator<any, number | string | null, any>[] =>
+export const getGridStringOperators = (disableTrim: boolean = false) =>
   convertLegacyOperators([
     {
       value: 'contains',
@@ -125,4 +123,4 @@ export const getGridStringOperators = (
       },
       InputComponent: GridFilterInputMultipleValue,
     },
-  ]);
+  ] as const satisfies ReadonlyArray<Omit<GridFilterOperator<any, number | string | null, any>, 'getApplyFilterFn'>>);
