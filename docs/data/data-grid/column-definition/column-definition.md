@@ -220,15 +220,16 @@ By default, columns are assumed to hold strings, so the default column string ty
 
 The following are the native column types with their required value types:
 
-| Column type          | Value type                 |
-| :------------------- | :------------------------- |
-| `'string'` (default) | `string`                   |
-| `'number'`           | `number`                   |
-| `'date'`             | `Date() object`            |
-| `'dateTime'`         | `Date() object`            |
-| `'boolean'`          | `boolean`                  |
-| `'singleSelect'`     | A value in `.valueOptions` |
-| `'actions'`          | Not applicable             |
+| Column type          | Value type                          |
+| :------------------- | :---------------------------------- |
+| `'string'` (default) | `string`                            |
+| `'number'`           | `number`                            |
+| `'date'`             | `Date() object`                     |
+| `'dateTime'`         | `Date() object`                     |
+| `'boolean'`          | `boolean`                           |
+| `'singleSelect'`     | A value in `.valueOptions`          |
+| `'multipleSelect'`   | A list of values in `.valueOptions` |
+| `'actions'`          | Not applicable                      |
 
 ### Converting types
 
@@ -249,7 +250,7 @@ If for any reason, your data type is not the correct one, you can use `valueGett
 To use most of the column types, you only need to define the `type` property in your column definition.
 However, some types require additional properties to be set to make them work correctly:
 
-- If the column type is `'singleSelect'`, you also need to set the `valueOptions` property in the respective column definition. These values are options used for filtering and editing.
+- If the column type is `'singleSelect'` or `'multipleSelect'`, you also need to set the `valueOptions` property in the respective column definition. These values are options used for filtering and editing.
 
   ```tsx
   {

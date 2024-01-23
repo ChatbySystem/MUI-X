@@ -38,6 +38,11 @@ export interface GridBaseSlots {
    */
   baseSelect: React.JSXElementConstructor<any>;
   /**
+   * The custom MultipleSelect component used in the grid.
+   * @default Autocomplete
+   */
+  baseMultipleSelect: React.JSXElementConstructor<any>;
+  /**
    * The custom Switch component used in the grid.
    * @default Switch
    */

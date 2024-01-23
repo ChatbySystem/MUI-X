@@ -268,18 +268,7 @@ export interface GridActionsColDef<R extends GridValidRowModel = any, V = any, F
   getActions: (params: GridRowParams<R>) => React.ReactElement<GridActionsCellItemProps>[];
 }
 
-/**
- * Column Definition interface used for columns with the `singleSelect` type.
- * @demos
- *   - [Special column properties](/x/react-data-grid/column-definition/#special-properties)
- */
-export interface GridSingleSelectColDef<R extends GridValidRowModel = any, V = any, F = V>
-  extends GridBaseColDef<R, V, F> {
-  /**
-   * The type of the column.
-   * @default 'singleSelect'
-   */
-  type: 'singleSelect';
+interface GridCommonSelectColDef<R extends GridValidRowModel = any> {
   /**
    * To be used in combination with `type: 'singleSelect'`. This is an array (or a function returning an array) of the possible cell values and labels.
    */
@@ -299,6 +288,34 @@ export interface GridSingleSelectColDef<R extends GridValidRowModel = any, V = a
 }
 
 /**
+ * Column Definition interface used for columns with the `singleSelect` type.
+ * @demos
+ *   - [Special column properties](/x/react-data-grid/column-definition/#special-properties)
+ */
+export interface GridSingleSelectColDef<R extends GridValidRowModel = any, V = any, F = V>
+  extends GridBaseColDef<R, V, F>,
+    GridCommonSelectColDef<R> {
+  /**
+   * The type of the column.
+   * @default 'singleSelect'
+   */
+  type: 'singleSelect';
+}
+
+/**
+ * Column Definition interface used for columns with the `multipleSelect` type.
+ */
+export interface GridMultipleSelectColDef<R extends GridValidRowModel = any, V = any, F = V>
+  extends GridBaseColDef<R, V, F>,
+    GridCommonSelectColDef<R> {
+  /**
+   * The type of the column.
+   * @default 'multipleSelect'
+   */
+  type: 'multipleSelect';
+}
+
+/**
  * Column Definition interface.
  * @demos
  *   - [Column definition](/x/react-data-grid/column-definition/)
@@ -306,7 +323,8 @@ export interface GridSingleSelectColDef<R extends GridValidRowModel = any, V = a
 export type GridColDef<R extends GridValidRowModel = any, V = any, F = V> =
   | GridBaseColDef<R, V, F>
   | GridActionsColDef<R, V, F>
-  | GridSingleSelectColDef<R, V, F>;
+  | GridSingleSelectColDef<R, V, F>
+  | GridMultipleSelectColDef<R, V, F>;
 
 export type GridColTypeDef<V = any, F = V> = Omit<GridBaseColDef<any, V, F>, 'field'>;
 
