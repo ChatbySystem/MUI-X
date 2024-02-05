@@ -6,13 +6,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { useGridRootProps } from '../../hooks/utils/useGridRootProps';
 
 export type GridActionsCellItemProps = {
-  label: string;
   icon?: React.ReactElement;
   /** from https://mui.com/material-ui/api/button-base/#ButtonBase-prop-component */
   component?: React.ElementType;
 } & (
-  | ({ showInMenu?: false; icon: React.ReactElement } & IconButtonProps)
-  | ({ showInMenu: true } & MenuItemProps)
+  | ({ showInMenu?: false; label: string; icon: React.ReactElement } & IconButtonProps)
+  | ({ showInMenu: true; label: React.ReactElement } & MenuItemProps)
 );
 
 const GridActionsCellItem = React.forwardRef<HTMLButtonElement, GridActionsCellItemProps>(
@@ -58,7 +57,7 @@ GridActionsCellItem.propTypes = {
   // | To update them edit the TypeScript types and run "yarn proptypes"  |
   // ----------------------------------------------------------------------
   icon: PropTypes.element,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   showInMenu: PropTypes.bool,
 } as any;
 
