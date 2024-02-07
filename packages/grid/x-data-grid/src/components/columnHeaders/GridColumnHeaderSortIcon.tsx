@@ -66,7 +66,6 @@ function GridColumnHeaderSortIconRaw(props: GridColumnHeaderSortIconProps) {
     <rootProps.slots.baseIconButton
       tabIndex={-1}
       aria-label={apiRef.current.getLocaleText('columnHeaderSortIconLabel')}
-      title={apiRef.current.getLocaleText('columnHeaderSortIconLabel')}
       size="small"
       disabled={disabled}
       {...rootProps.slotProps?.baseIconButton}
@@ -76,15 +75,21 @@ function GridColumnHeaderSortIconRaw(props: GridColumnHeaderSortIconProps) {
   );
 
   return (
-    <GridIconButtonContainer>
-      {index != null && (
-        <Badge badgeContent={index} color="default">
-          {iconButton}
-        </Badge>
-      )}
+    <rootProps.slots.baseTooltip
+      title={apiRef.current.getLocaleText('columnHeaderSortIconLabel')}
+      enterDelay={1000}
+      {...rootProps.slotProps?.baseTooltip}
+    >
+      <GridIconButtonContainer>
+        {index != null && (
+          <Badge badgeContent={index} color="default">
+            {iconButton}
+          </Badge>
+        )}
 
-      {index == null && iconButton}
-    </GridIconButtonContainer>
+        {index == null && iconButton}
+      </GridIconButtonContainer>
+    </rootProps.slots.baseTooltip>
   );
 }
 
