@@ -1,11 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {
-  GridColDef,
-  DataGridPremium,
-  GridCellParams,
-  gridClasses,
-} from '@mui/x-data-grid-premium';
+import { GridColDef, DataGridPremium, gridClasses } from '@mui/x-data-grid-premium';
 
 // eliminate rounding errors in aggregation row
 const valueFormatter: GridColDef['valueFormatter'] = (value) =>
@@ -56,7 +51,7 @@ export default function StylingAllCellsButAggregation() {
       <DataGridPremium
         rows={rows}
         columns={columns}
-        getCellClassName={(params: GridCellParams<any, any, number>) => {
+        getCellClassName={(params) => {
           if (
             params.field === 'city' ||
             params.value == null ||
