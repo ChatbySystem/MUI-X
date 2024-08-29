@@ -1,8 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/system';
 import composeClasses from '@mui/utils/composeClasses';
 import clsx from 'clsx';
+import { styled } from '../../utils/styled';
 import { useGridSelector } from '../../hooks/utils/useGridSelector';
 import { gridDimensionsSelector } from '../../hooks/features/dimensions';
 import { GridOverlayType } from '../../hooks/features/overlays/useGridOverlays';

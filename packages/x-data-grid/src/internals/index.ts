@@ -154,6 +154,7 @@ export {
 } from '../utils/domUtils';
 export { isNavigationKey, isPasteShortcut } from '../utils/keyboardUtils';
 export * from '../utils/utils';
+export { styled } from '../utils/styled';
 export { exportAs } from '../utils/exportAs';
 export * from '../utils/getPublicApiRef';
 export * from '../utils/cellBorderUtils';

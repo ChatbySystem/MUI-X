@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { getDataGridUtilityClass, GridRenderCellParams } from '@mui/x-data-grid';
-import { styled, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import { SxProps } from '@mui/system';
 import composeClasses from '@mui/utils/composeClasses';
+import { getDataGridUtilityClass, GridRenderCellParams } from '@mui/x-data-grid';
+import { styled } from '@mui/x-data-grid/internals';
 import { useGridRootProps } from '../hooks/utils/useGridRootProps';
 import { DataGridPremiumProcessedProps } from '../models/dataGridPremiumProps';
 
@@ -11,7 +12,9 @@ const GridFooterCellRoot = styled('div', {
   slot: 'FooterCell',
   overridesResolver: (_, styles) => styles.footerCell,
 })<{ ownerState: OwnerState }>(({ theme }) => ({
+  // @ts-ignore `@mui/material` theme.typography does not exist
   fontWeight: theme.typography.fontWeightMedium,
+  // @ts-ignore `@mui/material` theme.vars does not exist
   color: (theme.vars || theme).palette.primary.dark,
 }));
 
@@ -54,6 +57,7 @@ function GridFooterCell(props: GridFooterCellProps) {
   const classes = useUtilityClasses(ownerState);
 
   return (
+    // @ts-ignore `@mui/material` system styled() doesn't have a compatible sx prop
     <GridFooterCellRoot ownerState={ownerState} className={classes.root} {...other}>
       {formattedValue}
     </GridFooterCellRoot>

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { styled, SxProps, Theme } from '@mui/system';
+import { SxProps, Theme } from '@mui/system';
 import composeClasses from '@mui/utils/composeClasses';
+import { styled } from '../../utils/styled';
 import { useGridApiContext } from '../../hooks/utils/useGridApiContext';
 import { useGridSelector } from '../../hooks/utils/useGridSelector';
 import { gridRowsMetaSelector } from '../../hooks/features/rows';
