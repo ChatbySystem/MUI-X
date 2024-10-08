@@ -73,8 +73,9 @@ export const useTreeItem2Utils = <
     publicAPI,
   } = useTreeViewContext<TSignatures, TOptionalSignatures>();
 
+  const itemMeta = instance.getItemMeta?.(itemId);
   const status: UseTreeItem2Status = {
-    expandable: isItemExpandable(children),
+    expandable: itemMeta ? itemMeta.expandable : isItemExpandable(children),
     expanded: instance.isItemExpanded(itemId),
     focused: instance.isItemFocused(itemId),
     selected: instance.isItemSelected(itemId),

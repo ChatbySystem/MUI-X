@@ -180,6 +180,13 @@ const TreeItemGroup = styled(Collapse, {
   ],
 });
 
+const isItemExpandable = (reactChildren: React.ReactNode) => {
+  if (Array.isArray(reactChildren)) {
+    return reactChildren.length > 0 && reactChildren.some(isItemExpandable);
+  }
+  return Boolean(reactChildren);
+};
+
 /**
  *
  * Demos:
@@ -250,13 +257,8 @@ export const TreeItem = React.forwardRef(function TreeItem(
     groupTransition: inSlots?.groupTransition,
   };
 
-  const isExpandable = (reactChildren: React.ReactNode) => {
-    if (Array.isArray(reactChildren)) {
-      return reactChildren.length > 0 && reactChildren.some(isExpandable);
-    }
-    return Boolean(reactChildren);
-  };
-  const expandable = isExpandable(children);
+  const itemMeta = instance.getItemMeta?.(itemId);
+  const expandable = itemMeta ? itemMeta.expandable : isItemExpandable(children);
 
   const ownerState: TreeItemOwnerState = {
     ...props,

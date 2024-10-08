@@ -9,6 +9,7 @@ import MuiCheckbox, { CheckboxProps } from '@mui/material/Checkbox';
 import useSlotProps from '@mui/utils/useSlotProps';
 import { shouldForwardProp } from '@mui/system/createStyled';
 import composeClasses from '@mui/utils/composeClasses';
+import { fastMemo } from '@mui/x-internals/fastMemo';
 import { styled, createUseThemeProps } from '../internals/zero-styled';
 import { TreeItem2Props, TreeItem2OwnerState } from './TreeItem2.types';
 import {
@@ -41,7 +42,10 @@ export const TreeItem2Content = styled('div', {
   slot: 'Content',
   overridesResolver: (props, styles) => styles.content,
   shouldForwardProp: (prop) =>
-    shouldForwardProp(prop) && prop !== 'status' && prop !== 'indentationAtItemLevel',
+    shouldForwardProp(prop) &&
+    prop !== 'status' &&
+    prop !== 'indentationAtItemLevel' &&
+    prop !== 'hidden',
 })<{ status: UseTreeItem2Status; indentationAtItemLevel?: true }>(({ theme }) => ({
   padding: theme.spacing(0.5, 1),
   borderRadius: theme.shape.borderRadius,
@@ -61,6 +65,12 @@ export const TreeItem2Content = styled('div', {
     },
   },
   variants: [
+    {
+      props: { hidden: true },
+      style: {
+        display: 'none',
+      },
+    },
     {
       props: { indentationAtItemLevel: true },
       style: {
@@ -225,13 +235,23 @@ type TreeItem2Component = ((
  *
  * - [TreeItem2 API](https://mui.com/x/api/tree-view/tree-item-2/)
  */
-export const TreeItem2 = React.forwardRef(function TreeItem2(
+const TreeItem2 = React.forwardRef(function TreeItem2(
   inProps: TreeItem2Props,
   forwardedRef: React.Ref<HTMLLIElement>,
 ) {
   const props = useThemeProps({ props: inProps, name: 'MuiTreeItem2' });
 
-  const { id, itemId, label, disabled, children, slots = {}, slotProps = {}, ...other } = props;
+  const {
+    id,
+    itemId,
+    label,
+    disabled,
+    isContentHidden,
+    children,
+    slots = {},
+    slotProps = {},
+    ...other
+  } = props;
 
   const {
     getRootProps,
@@ -249,6 +269,7 @@ export const TreeItem2 = React.forwardRef(function TreeItem2(
     children,
     label,
     disabled,
+    isContentHidden,
   });
 
   const ownerState: TreeItem2OwnerState = {
@@ -382,6 +403,7 @@ TreeItem2.propTypes = {
    * The id attribute of the item. If not provided, it will be generated.
    */
   id: PropTypes.string,
+  isContentHidden: PropTypes.bool,
   /**
    * The id of the item.
    * Must be unique.
@@ -415,3 +437,7 @@ TreeItem2.propTypes = {
    */
   slots: PropTypes.object,
 } as any;
+
+const MemoizedTreeItem2 = fastMemo(TreeItem2);
+
+export { MemoizedTreeItem2 as TreeItem2 };
