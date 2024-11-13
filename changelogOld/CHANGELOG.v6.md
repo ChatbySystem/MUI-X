@@ -20,7 +20,7 @@ Same changes as in `@mui/x-date-pickers@6.19.12`.
 
 ### Docs
 
-- [docs] Use MUI X v6 in CodeSandbox and StackBlitz demos (#12838) @cherniavskii
+- [docs] Use MUI X v6 in CodeSandbox and StackBlitz demos (#12838) @cherniavskii
 
 ## 6.19.11
 

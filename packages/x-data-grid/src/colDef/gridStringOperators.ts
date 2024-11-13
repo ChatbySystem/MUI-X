@@ -27,13 +27,13 @@ const createContainsFilterFn =
     }
     const trimmedValue = disableTrim ? filterItem.value : filterItem.value.trim();
     const filterRegex = new RegExp(escapeRegExp(trimmedValue), 'i');
-    return (value: any): boolean => {
+    const contains = (value: unknown): boolean => {
       if (value == null) {
-        return negate;
+        return false;
       }
-      const matches = filterRegex.test(String(value));
-      return negate ? !matches : matches;
+      return filterRegex.test(String(value));
     };
+    return negate ? (value: unknown) => !contains(value) : contains;
   };
 
 const createEqualityFilterFn =
@@ -44,21 +44,44 @@ const createEqualityFilterFn =
     const trimmedValue = disableTrim ? filterItem.value : filterItem.value.trim();
 
     const collator = new Intl.Collator(undefined, { sensitivity: 'base', usage: 'search' });
-    return (value: any): boolean => {
+    const isEqual = (value: unknown): boolean => {
       if (value == null) {
-        return negate;
+        return false;
       }
-      const isEqual = collator.compare(trimmedValue, value.toString()) === 0;
-      return negate ? !isEqual : isEqual;
+      return collator.compare(trimmedValue, value.toString()) === 0;
     };
+    return negate ? (value: unknown) => !isEqual(value) : isEqual;
   };
 
 const createEmptyFilterFn = (negate: boolean) => () => {
-  return (value: any): boolean => {
-    const isEmpty = value === '' || value == null;
-    return negate ? !isEmpty : isEmpty;
+  const isEmpty = (value: unknown): boolean => {
+    return value === '' || value == null;
   };
+  return negate ? (value: unknown) => !isEmpty(value) : isEmpty;
 };
+
+const createAnyFilterFn =
+  (disableTrim: boolean, negate: boolean) => (filterItem: GridFilterItem) => {
+    if (!Array.isArray(filterItem.value) || filterItem.value.length === 0) {
+      return null;
+    }
+
+    const filterItemValue = disableTrim
+      ? filterItem.value
+      : filterItem.value.map((val) => val.trim());
+    const collator = new Intl.Collator(undefined, { sensitivity: 'base', usage: 'search' });
+
+    const isAnyOf = (value: unknown): boolean => {
+      if (value == null) {
+        return false;
+      }
+      return filterItemValue.some((filterValue: GridFilterItem['value']) => {
+        return collator.compare(filterValue, value.toString() || '') === 0;
+      });
+    };
+
+    return negate ? (value: unknown) => !isAnyOf(value) : isAnyOf;
+  };
 
 export const getGridStringOperators = (
   disableTrim: boolean = false,
@@ -125,22 +148,12 @@ export const getGridStringOperators = (
   },
   {
     value: 'isAnyOf',
-    getApplyFilterFn: (filterItem: GridFilterItem) => {
-      if (!Array.isArray(filterItem.value) || filterItem.value.length === 0) {
-        return null;
-      }
-      const filterItemValue = disableTrim
-        ? filterItem.value
-        : filterItem.value.map((val) => val.trim());
-      const collator = new Intl.Collator(undefined, { sensitivity: 'base', usage: 'search' });
-
-      return (value): boolean =>
-        value != null
-          ? filterItemValue.some((filterValue: GridFilterItem['value']) => {
-              return collator.compare(filterValue, value.toString() || '') === 0;
-            })
-          : false;
-    },
+    getApplyFilterFn: createAnyFilterFn(disableTrim, false),
+    InputComponent: GridFilterInputMultipleValue,
+  },
+  {
+    value: 'isNotAnyOf',
+    getApplyFilterFn: createAnyFilterFn(disableTrim, true),
     InputComponent: GridFilterInputMultipleValue,
   },
 ];
