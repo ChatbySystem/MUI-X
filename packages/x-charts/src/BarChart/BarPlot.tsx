@@ -2,8 +2,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useTransition } from '@react-spring/web';
+import { styled } from '@mui/material/styles';
 import { useCartesianContext } from '../context/CartesianProvider';
-import { BarElement, BarElementSlotProps, BarElementSlots } from './BarElement';
+import { BarElement, barElementClasses, BarElementSlotProps, BarElementSlots } from './BarElement';
 import { AxisDefaultized } from '../models/axis';
 import { BarItemIdentifier } from '../models';
 import getColor from './getColor';
@@ -16,6 +17,7 @@ import { checkScaleErrors } from './checkScaleErrors';
 import { useBarSeries } from '../hooks/useSeries';
 import { SeriesFormatterResult } from '../context/PluginProvider';
 import { useSkipAnimation } from '../context/AnimationProvider';
+import { barLabelClasses } from './BarLabel';
 
 /**
  * Solution of the equations
@@ -234,6 +236,34 @@ const enterStyle = ({ x, width, y, height }: AnimationData) => ({
   width,
 });
 
+export const BarPlotRoot = styled('g', {
+  name: 'MuiBarPlot',
+  slot: 'Root',
+  overridesResolver: (_, styles) => styles.root,
+})(({ theme }) => ({
+  [`& .${barElementClasses.highlighted}`]: {
+    filter: 'brightness(120%)',
+  },
+  [`& .${barElementClasses.faded}`]: {
+    opacity: 0.3,
+  },
+  [`& .${barElementClasses.root}`]: {
+    transition: 'opacity 0.2s ease-in, fill 0.2s ease-in',
+  },
+  [`& .${barLabelClasses.root}`]: {
+    ...theme?.typography?.body2,
+    transition: 'opacity 0.2s ease-in, fill 0.2s ease-in',
+    stroke: 'none',
+    fill: (theme.vars || theme)?.palette?.text?.primary,
+    textAnchor: 'middle',
+    dominantBaseline: 'central',
+    pointerEvents: 'none',
+  },
+  [`& .${barLabelClasses.faded}`]: {
+    opacity: 0.3,
+  },
+}));
+
 /**
  * Demos:
  *
@@ -271,7 +301,7 @@ function BarPlot(props: BarPlotProps) {
   });
 
   return (
-    <React.Fragment>
+    <BarPlotRoot>
       {!withoutBorderRadius &&
         maskTransition((style, { id, hasPositive, hasNegative, layout }) => {
           return (
@@ -316,7 +346,7 @@ function BarPlot(props: BarPlotProps) {
           {...other}
         />
       )}
-    </React.Fragment>
+    </BarPlotRoot>
   );
 }
 
