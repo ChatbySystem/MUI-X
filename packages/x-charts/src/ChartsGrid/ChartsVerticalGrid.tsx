@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DrawingAreaState } from '../context/DrawingAreaProvider';
-import { useTicks } from '../hooks/useTicks';
+import { useTicks } from '../internals/useTicks';
 import { AxisDefaultized, ChartsXAxisProps, ScaleName } from '../models/axis';
 import { GridLine } from './styledComponents';
 import { ChartsGridClasses } from './chartsGridClasses';

@@ -3,7 +3,7 @@ import { styled, SxProps, Theme, useThemeProps } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import useForkRef from '@mui/utils/useForkRef';
-import { useAxisEvents } from '../hooks/useAxisEvents';
+import { useAxisEvents } from '../internals/useAxisEvents';
 import { ChartsAxesGradients } from '../internals/components/ChartsAxesGradients';
 import { useDrawingArea } from '../hooks';
 import { useSurfaceRef } from '../context/SvgRefProvider';

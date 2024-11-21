@@ -7,7 +7,7 @@ import {
   ScatterValueType,
 } from '../models/seriesType/scatter';
 import { getValueToPositionMapper } from '../hooks/useScale';
-import { useInteractionItemProps } from '../hooks/useInteractionItemProps';
+import { useInteractionItemProps } from '../internals/useInteractionItemProps';
 import { useStore } from '../internals/useStore';
 import { useSelector } from '../internals/useSelector';
 import { D3Scale } from '../models/axis';

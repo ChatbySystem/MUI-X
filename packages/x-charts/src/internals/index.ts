@@ -5,7 +5,7 @@ export * from '../ChartContainer/ResizableContainer';
 
 // hooks
 export { useSeries } from '../hooks/useSeries';
-export { useInteractionItemProps } from '../hooks/useInteractionItemProps';
+export { useInteractionItemProps } from './useInteractionItemProps';
 export { useDrawingArea } from '../hooks/useDrawingArea';
 export { useScatterChartProps } from '../ScatterChart/useScatterChartProps';
 export { useLineChartProps } from '../LineChart/useLineChartProps';

@@ -7,7 +7,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import generateUtilityClass from '@mui/utils/generateUtilityClass';
 import { styled } from '@mui/material/styles';
 import generateUtilityClasses from '@mui/utils/generateUtilityClasses';
-import { useInteractionItemProps } from '../hooks/useInteractionItemProps';
+import { useInteractionItemProps } from '../internals/useInteractionItemProps';
 import { PieItemId } from '../models';
 
 export interface PieArcClasses {

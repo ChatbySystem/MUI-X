@@ -1,12 +1,12 @@
 'use client';
 import * as React from 'react';
 import { useCartesianContext } from '../context/CartesianProvider';
-import { isBandScale } from '../internals/isBandScale';
+import { isBandScale } from './isBandScale';
 import { AxisDefaultized } from '../models/axis';
-import { getSVGPoint } from '../internals/getSVGPoint';
-import { useSvgRef } from './useSvgRef';
-import { useDrawingArea } from './useDrawingArea';
-import { useStore } from '../internals/useStore';
+import { getSVGPoint } from './getSVGPoint';
+import { useSvgRef } from '../hooks/useSvgRef';
+import { useDrawingArea } from '../hooks/useDrawingArea';
+import { useStore } from './useStore';
 
 function getAsANumber(value: number | Date) {
   return value instanceof Date ? value.getTime() : value;
