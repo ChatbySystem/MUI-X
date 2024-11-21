@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 // @ts-nocheck
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -12,17 +11,19 @@ import {
   unstable_useScatterSeries,
 } from '@mui/x-charts/hooks';
 
-const series = unstable_useSeries();
-const pieSeries = unstable_usePieSeries();
-const lineSeries = unstable_useLineSeries();
-const barSeries = unstable_useBarSeries();
-const scatterSeries = unstable_useScatterSeries();
+function App() {
+  const series = unstable_useSeries();
+  const pieSeries = unstable_usePieSeries();
+  const lineSeries = unstable_useLineSeries();
+  const barSeries = unstable_useBarSeries();
+  const scatterSeries = unstable_useScatterSeries();
 
-// prettier-ignore
-<div>
-  <PieChart legend={{ hidden: true }} />
-  <PieChart legend={{ hidden: true }} slotProps={{ tooltip: { trigger: 'axis' } }} />
-  <ResponsiveChartContainer>
-    <BarPlot />
-  </ResponsiveChartContainer>
-</div>;
+  // prettier-ignore
+  <div>
+    <PieChart legend={{ hidden: true }} />
+    <PieChart legend={{ hidden: true }} slotProps={{ tooltip: { trigger: 'axis' } }} />
+    <ResponsiveChartContainer>
+      <BarPlot />
+    </ResponsiveChartContainer>
+  </div>;
+}

@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-restricted-imports */
 import {
   useSeries,
   usePieSeries,
@@ -8,8 +6,10 @@ import {
   useScatterSeries,
 } from '@mui/x-charts/hooks';
 
-const series = useSeries();
-const pieSeries = usePieSeries();
-const lineSeries = useLineSeries();
-const barSeries = useBarSeries();
-const scatterSeries = useScatterSeries();
+function useThings() {
+  const series = useSeries();
+  const pieSeries = usePieSeries();
+  const lineSeries = useLineSeries();
+  const barSeries = useBarSeries();
+  const scatterSeries = useScatterSeries();
+}
