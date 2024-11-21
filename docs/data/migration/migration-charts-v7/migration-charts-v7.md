@@ -125,3 +125,22 @@ If you used axes in a pie chart please open an issue, we would be curious to get
 
 The `resolveSizeBeforeRender` prop has been removed from all components.
 If you were using this prop, you can safely remove it.
+
+## Stabilize `useSeries` and `useXxxSeries` hooks ✅
+
+The `useSeries` hook family has been stabilized and renamed accordingly.
+
+```diff
+  import {
+-   unstable_useSeries,
++   useSeries,
+-   unstable_usePieSeries,
++   usePieSeries,
+-   unstable_useLineSeries,
++   useLineSeries,
+-   unstable_useBarSeries,
++   useBarSeries,
+-   unstable_useScatterSeries,
++   useScatterSeries,
+  } from '@mui/x-charts/hooks';
+```
