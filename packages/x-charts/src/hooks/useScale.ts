@@ -1,6 +1,6 @@
 'use client';
 import { isBandScale } from '../internals/isBandScale';
-import { AxisScaleConfig, D3Scale, ScaleName } from '../models/axis';
+import { AxisId, AxisScaleConfig, D3Scale, ScaleName } from '../models/axis';
 import { useXAxis, useYAxis } from './useAxis';
 
 /**
@@ -19,10 +19,10 @@ export function getValueToPositionMapper(scale: D3Scale): (value: any) => number
 /**
  * Get the X scale.
  *
- * @param {string | undefined} axisId - If provided returns the scale for the x axis with axisId, else returns the values for the default x axis.
+ * @param {AxisId | undefined} axisId - If provided returns the scale for the x axis with axisId, else returns the values for the default x axis.
  * @returns {AxisScaleConfig[S]['scale']} The scale for the specified X axis.
  */
-export function useXScale<S extends ScaleName>(axisId?: string): AxisScaleConfig[S]['scale'] {
+export function useXScale<S extends ScaleName>(axisId?: AxisId): AxisScaleConfig[S]['scale'] {
   const axis = useXAxis(axisId);
 
   return axis.scale;
@@ -31,10 +31,10 @@ export function useXScale<S extends ScaleName>(axisId?: string): AxisScaleConfig
 /**
  * Get the Y scale.
  *
- * @param {string | undefined} axisId - If provided returns the scale for the y axis with axisId, else returns the values for the default y axis.
+ * @param {AxisId | undefined} axisId - If provided returns the scale for the y axis with axisId, else returns the values for the default y axis.
  * @returns {AxisScaleConfig[S]['scale']} The scale for the specified Y axis.
  */
-export function useYScale<S extends ScaleName>(axisId?: string): AxisScaleConfig[S]['scale'] {
+export function useYScale<S extends ScaleName>(axisId?: AxisId): AxisScaleConfig[S]['scale'] {
   const axis = useYAxis(axisId);
 
   return axis.scale;
