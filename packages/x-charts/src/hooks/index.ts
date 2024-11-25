@@ -5,3 +5,7 @@ export * from './useAxis';
 export * from './useColorScale';
 export * from './useSvgRef';
 export * from './useSeries';
+export * from './useScatterSeries';
+export * from './usePieSeries';
+export * from './useBarSeries';
+export * from './useLineSeries';
