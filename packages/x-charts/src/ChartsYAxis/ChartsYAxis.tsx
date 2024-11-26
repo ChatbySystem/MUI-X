@@ -6,7 +6,7 @@ import composeClasses from '@mui/utils/composeClasses';
 import { useThemeProps, useTheme, Theme, styled } from '@mui/material/styles';
 import { useRtl } from '@mui/system/RtlProvider';
 import { useCartesianContext } from '../context/CartesianProvider';
-import { useTicks } from '../hooks/useTicks';
+import { useTicks } from '../internals/useTicks';
 import { useDrawingArea } from '../hooks/useDrawingArea';
 import { ChartsYAxisProps } from '../models/axis';
 import { AxisRoot } from '../internals/components/AxisSharedComponents';

@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { symbol as d3Symbol, symbolsFill as d3SymbolsFill } from '@mui/x-charts-vendor/d3-shape';
 import { animated, to, useSpring } from '@react-spring/web';
 import { getSymbol } from '../internals/getSymbol';
-import { useInteractionItemProps } from '../hooks/useInteractionItemProps';
+import { useInteractionItemProps } from '../internals/useInteractionItemProps';
 import { useItemHighlighted } from '../context';
 import { MarkElementOwnerState, useUtilityClasses } from './markElementClasses';
 import { selectorChartsInteractionXAxis } from '../context/InteractionSelectors';

@@ -1,8 +1,8 @@
 'use client';
 import * as React from 'react';
 import { AxisConfig, D3Scale } from '../models/axis';
-import { isBandScale } from '../internals/isBandScale';
-import { isInfinity } from '../internals/isInfinity';
+import { isBandScale } from './isBandScale';
+import { isInfinity } from './isInfinity';
 
 export interface TickParams {
   /**

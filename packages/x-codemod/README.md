@@ -168,12 +168,31 @@ If you imported both `ResponsiveChartContainer` and `ChartContainer` in the same
 Verify the git diff to remove the duplicate.
 
 ```diff
- import { ChartContainer } from '@mui/x-charts/ChartContainer';
+  import { ChartContainer } from '@mui/x-charts/ChartContainer';
 - import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 + import { ChartContainer } from '@mui/x-charts/ChartContainer';
 ```
 
 :::
+
+#### `rename-unstable-use-series`
+
+Renames multiple `useSeries` components from their unstable, as they have now become stable.
+
+```diff
+  import {
+-   unstable_useSeries,
++   useSeries,
+-   unstable_usePieSeries,
++   usePieSeries,
+-   unstable_useLineSeries,
++   useLineSeries,
+-   unstable_useBarSeries,
++   useBarSeries,
+-   unstable_useScatterSeries,
++   useScatterSeries,
+  } from '@mui/x-charts/hooks';
+```
 
 ## v7.0.0
 

@@ -11,7 +11,7 @@ import { ScatterItemIdentifier } from '../models';
 import { SeriesId } from '../models/seriesType/common';
 import { useDrawingArea, useSvgRef } from '../hooks';
 import { useHighlighted } from '../context';
-import { useScatterSeries } from '../hooks/useSeries';
+import { useScatterSeries } from '../hooks/useScatterSeries';
 
 export type ChartsVoronoiHandlerProps = {
   /**

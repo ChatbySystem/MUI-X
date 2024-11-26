@@ -11,7 +11,7 @@ import {
 } from '../models/axis';
 import { CartesianChartSeriesType } from '../models/seriesType/config';
 import { getColorScale, getOrdinalColorScale } from './colorScale';
-import { getTickNumber } from '../hooks/useTicks';
+import { getTickNumber } from './useTicks';
 import { getScale } from './getScale';
 import { DrawingAreaState } from '../context/DrawingAreaProvider';
 import { FormattedSeries } from '../context/SeriesProvider';

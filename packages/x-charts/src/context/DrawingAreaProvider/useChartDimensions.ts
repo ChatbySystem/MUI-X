@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
-import { DEFAULT_MARGINS } from '../constants';
-import { LayoutConfig } from '../models/layout';
+import { DEFAULT_MARGINS } from '../../constants';
+import { LayoutConfig } from '../../models/layout';
 
 const useChartDimensions = (width: number, height: number, margin: LayoutConfig['margin']) => {
   const defaultizedMargin = {

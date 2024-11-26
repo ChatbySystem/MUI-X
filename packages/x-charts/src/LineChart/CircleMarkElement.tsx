@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { warnOnce } from '@mui/x-internals/warning';
 import { animated, useSpring } from '@react-spring/web';
-import { useInteractionItemProps } from '../hooks/useInteractionItemProps';
+import { useInteractionItemProps } from '../internals/useInteractionItemProps';
 import { useItemHighlighted } from '../context';
 import { MarkElementOwnerState, useUtilityClasses } from './markElementClasses';
 import { useSelector } from '../internals/useSelector';
