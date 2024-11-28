@@ -30,6 +30,14 @@ export default function BarGapNoSnap() {
           min: -2,
           max: 5,
         },
+        {
+          propName: `maxBarSize`,
+          knob: 'number',
+          defaultValue: 20,
+          step: 1,
+          min: 0,
+          max: 100,
+        },
       ]}
       renderDemo={(props) => (
         <BarChart
@@ -44,6 +52,7 @@ export default function BarGapNoSnap() {
               dataKey: 'year',
               categoryGapRatio: props.categoryGapRatio,
               barGapRatio: props.barGapRatio,
+              maxBarSize: props.maxBarSize,
             },
           ]}
           yAxis={[{ valueFormatter: (v) => `$ ${v / 1000000}B` }]}
@@ -62,6 +71,7 @@ export default function BarGapNoSnap() {
           `      data: ['Page 1', 'Page 2', 'Page 3']`,
           `      categoryGapRatio: ${props.categoryGapRatio}`,
           `      barGapRatio: ${props.barGapRatio}`,
+          `      maxBarSize: ${props.maxBarSize}`,
           `    }`,
           '/>',
         ].join('\n');
