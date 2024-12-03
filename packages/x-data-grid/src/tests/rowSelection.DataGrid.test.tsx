@@ -381,9 +381,11 @@ describe('<DataGrid /> - Row selection', () => {
       expect(input2.checked).to.equal(true);
     });
 
-    it('should remove the selection from rows that are filtered out', async function test() {
+    it('should remove the selection from rows that are filtered out', async function test(t = {}) {
       if (isJSDOM) {
-        this.skip();
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
       render(
         <TestDataGridSelection
@@ -528,9 +530,12 @@ describe('<DataGrid /> - Row selection', () => {
       expect(getSelectedRowIds()).to.deep.equal([1, 2]);
     });
 
-    it('should not jump during scroll while the focus is on the checkbox', function test() {
+    it('should not jump during scroll while the focus is on the checkbox', function test(t = {}) {
       if (isJSDOM) {
-        this.skip(); // HTMLElement.focus() only scrolls to the element on a real browser
+        // HTMLElement.focus() only scrolls to the element on a real browser
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
       const data = getBasicGridData(20, 1);
       render(<TestDataGridSelection {...data} rowHeight={50} checkboxSelection hideFooter />);

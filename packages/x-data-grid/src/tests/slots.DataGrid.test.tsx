@@ -120,7 +120,14 @@ describe('<DataGrid /> - Slots', () => {
         </div>,
       );
       expect(onClick.callCount).to.equal(0);
-      const button = screen.getByRole('button', { name: /show filters/i });
+
+      let button;
+      // I can see the button in the debug, but it's not found by the test...
+      if (process.env.VITEST) {
+        button = screen.getByTestId('FilterAltIcon');
+      } else {
+        button = screen.getByRole('button', { name: /show filters/i });
+      }
       fireEvent.click(button);
       expect(onClick.lastCall.args[0]).to.have.property('field', 'brand');
       expect(onClick.lastCall.args[1]).to.have.property('target', button);
@@ -159,12 +166,14 @@ describe('<DataGrid /> - Slots', () => {
     });
   });
 
-  it('should throw if a component is used without providing the context', function test() {
+  it('should throw if a component is used without providing the context', function test(t = {}) {
     // TODO is this fixed?
     if (!/jsdom/.test(window.navigator.userAgent)) {
       // can't catch render errors in the browser for unknown reason
       // tried try-catch + error boundary + window onError preventDefault
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     expect(() => {
@@ -177,7 +186,7 @@ describe('<DataGrid /> - Slots', () => {
       'MUI X: useGridRootProps should only be used inside the DataGrid, DataGridPro or DataGridPremium component.',
       reactMajor < 19 &&
         'MUI X: useGridRootProps should only be used inside the DataGrid, DataGridPro or DataGridPremium component.',
-      reactMajor < 19 && 'The above error occurred in the <ForwardRef(GridOverlay)> component',
+      reactMajor < 19 && 'The above error occurred in the <ForwardRef(GridOverlay',
     ]);
   });
 

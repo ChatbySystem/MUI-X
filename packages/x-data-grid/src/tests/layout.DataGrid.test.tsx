@@ -80,12 +80,10 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   describe('Layout', () => {
-    before(function beforeHook() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        // Need layouting
-        this.skip();
-      }
-    });
+    if (/jsdom/.test(window.navigator.userAgent)) {
+      // Need layouting
+      return;
+    }
 
     it('should resize the width of the columns', async () => {
       interface TestCaseProps {
@@ -699,10 +697,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
         );
       });
 
-      it('should include the scrollbar in the intrinsic height when there are more columns to show', function test() {
+      it('should include the scrollbar in the intrinsic height when there are more columns to show', function test(t = {}) {
         // On MacOS the scrollbar has zero width
         if (/macintosh/i.test(window.navigator.userAgent)) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
         const columnHeaderHeight = 40;
         const rowHeight = 30;
@@ -795,10 +795,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
       expect(gridVar('--DataGrid-hasScrollX')).to.equal('0');
     });
 
-    it('should have a horizontal scrollbar when there are more columns to show and no rows', function test() {
+    it('should have a horizontal scrollbar when there are more columns to show and no rows', function test(t = {}) {
       // On MacOS the scrollbar has zero width
       if (/macintosh/i.test(window.navigator.userAgent)) {
-        this.skip();
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
       render(
         <div style={{ width: 150, height: 300 }}>
@@ -943,12 +945,14 @@ describe('<DataGrid /> - Layout & warnings', () => {
       }).toErrorDev('MUI X: `<DataGrid pagination={false} />` is not a valid prop.');
     });
 
-    it('should throw if the rows has no id', function test() {
+    it('should throw if the rows has no id', function test(t = {}) {
       // TODO is this fixed?
       if (!/jsdom/.test(window.navigator.userAgent)) {
         // can't catch render errors in the browser for unknown reason
         // tried try-catch + error boundary + window onError preventDefault
-        this.skip();
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
 
       const rows = [
@@ -968,7 +972,7 @@ describe('<DataGrid /> - Layout & warnings', () => {
         'The Data Grid component requires all rows to have a unique `id` property',
         reactMajor < 19 &&
           'The Data Grid component requires all rows to have a unique `id` property',
-        reactMajor < 19 && 'The above error occurred in the <ForwardRef(DataGrid)> component',
+        reactMajor < 19 && 'The above error occurred in the <ForwardRef(DataGrid',
       ]);
       expect((errorRef.current as any).errors).to.have.length(1);
       expect((errorRef.current as any).errors[0].toString()).to.include(
@@ -1029,9 +1033,11 @@ describe('<DataGrid /> - Layout & warnings', () => {
   describe('non-strict mode', () => {
     const { render: innerRender } = createRenderer({ strict: false });
 
-    it('should render in JSDOM', function test() {
+    it('should render in JSDOM', function test(t = {}) {
       if (!/jsdom/.test(window.navigator.userAgent)) {
-        this.skip(); // Only run in JSDOM
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
       innerRender(
         <div style={{ width: 300, height: 300 }}>
@@ -1043,9 +1049,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
     });
   });
 
-  it('should allow style customization using the theme', function test() {
+  it('should allow style customization using the theme', function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip(); // Doesn't work with mocked window.getComputedStyle
+      // Doesn't work with mocked window.getComputedStyle
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     const theme = createTheme({
@@ -1085,9 +1094,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
     expect(window.getComputedStyle(getCell(0, 0)).backgroundColor).to.equal('rgb(0, 128, 0)');
   });
 
-  it('should support the sx prop', function test() {
+  it('should support the sx prop', function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
-      this.skip(); // Doesn't work with mocked window.getComputedStyle
+      // Doesn't work with mocked window.getComputedStyle
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     const theme = createTheme({
@@ -1168,11 +1180,11 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   describe('should not overflow parent', () => {
-    before(function beforeHook() {
-      if (/jsdom/.test(window.navigator.userAgent)) {
-        this.skip(); // Doesn't work with mocked window.getComputedStyle
-      }
-    });
+    if (/jsdom/.test(window.navigator.userAgent)) {
+      // Doesn't work with mocked window.getComputedStyle
+
+      return;
+    }
 
     const rows = [{ id: 1, username: '@MUI', age: 20 }];
     const columns = [
@@ -1210,10 +1222,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   // See https://github.com/mui/mui-x/issues/8737
-  it('should not add horizontal scrollbar when .MuiDataGrid-main has border', async function test() {
+  it('should not add horizontal scrollbar when .MuiDataGrid-main has border', async function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
       // Need layouting
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     render(
@@ -1238,10 +1252,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   // See https://github.com/mui/mui-x/issues/8689#issuecomment-1582616570
-  it('should not add scrollbars when the parent container has fractional size', async function test() {
+  it('should not add scrollbars when the parent container has fractional size', async function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
       // Need layouting
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     render(
@@ -1257,10 +1273,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   // See https://github.com/mui/mui-x/issues/9510
-  it('should not exceed maximum call stack size when the parent container has fractional width', function test() {
+  it('should not exceed maximum call stack size when the parent container has fractional width', function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
       // Need layouting
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     render(
@@ -1271,10 +1289,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   // See https://github.com/mui/mui-x/issues/9550
-  it('should not exceed maximum call stack size with duplicated flex fields', function test() {
+  it('should not exceed maximum call stack size with duplicated flex fields', function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
       // Need layouting
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     expect(() => {
@@ -1296,10 +1316,12 @@ describe('<DataGrid /> - Layout & warnings', () => {
   });
 
   // See https://github.com/mui/mui-x/issues/9550#issuecomment-1619020477
-  it('should not exceed maximum call stack size caused by floating point precision error', function test() {
+  it('should not exceed maximum call stack size caused by floating point precision error', function test(t = {}) {
     if (/jsdom/.test(window.navigator.userAgent)) {
       // Need layouting
-      this.skip();
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     render(

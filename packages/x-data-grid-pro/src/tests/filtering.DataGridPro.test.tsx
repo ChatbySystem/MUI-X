@@ -500,7 +500,9 @@ describe('<DataGridPro /> - Filter', () => {
     // https://github.com/testing-library/dom-testing-library/issues/820#issuecomment-726936225
     const input = getSelectInput(
       screen.queryAllByRole('combobox', { name: 'Logic operator', hidden: true })[
-        isJSDOM ? 1 : 0 // https://github.com/testing-library/dom-testing-library/issues/846
+        // https://github.com/testing-library/dom-testing-library/issues/846
+        // This error doesn't happen in vitest
+        isJSDOM && process.env.VITEST !== 'true' ? 1 : 0
       ],
     );
     fireEvent.change(input!, { target: { value: 'or' } });
@@ -660,9 +662,12 @@ describe('<DataGridPro /> - Filter', () => {
     });
   });
 
-  it('should not scroll the page when a filter is removed from the panel', function test() {
+  it('should not scroll the page when a filter is removed from the panel', function test(t = {}) {
     if (isJSDOM) {
-      this.skip(); // Needs layout
+      // Needs layout
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
     render(
       <div>
@@ -694,9 +699,12 @@ describe('<DataGridPro /> - Filter', () => {
     expect(window.scrollY).to.equal(initialScrollPosition);
   });
 
-  it('should not scroll the page when opening the filter panel and the operator=isAnyOf', function test() {
+  it('should not scroll the page when opening the filter panel and the operator=isAnyOf', function test(t = {}) {
     if (isJSDOM) {
-      this.skip(); // Needs layout
+      // Needs layout
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     render(
@@ -912,9 +920,12 @@ describe('<DataGridPro /> - Filter', () => {
     });
   });
 
-  it('should give a stable ID to the filter item used as placeholder', function test() {
+  it('should give a stable ID to the filter item used as placeholder', function test(t = {}) {
     if (isJSDOM) {
-      this.skip(); // It's not re-rendering the filter panel correctly
+      // It's not re-rendering the filter panel correctly
+      // @ts-expect-error to support mocha and vitest
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this?.skip?.() || t?.skip();
     }
 
     const { rerender } = render(<TestCase slots={{ toolbar: GridToolbar }} />);
@@ -1251,8 +1262,11 @@ describe('<DataGridPro /> - Filter', () => {
         },
       };
       render(<TestCase initialState={initialState} filterModel={newModel} columns={columns} />);
-      // For JSDom, the first hidden combo is also found which we are not interested in
-      const select = screen.getAllByRole('combobox', { name: 'Logic operator' })[isJSDOM ? 1 : 0];
+      const select = screen.getAllByRole('combobox', { name: 'Logic operator' })[
+        // For JSDom, the first hidden combo is also found which we are not interested in
+        // This error doesn't happen in vitest
+        isJSDOM && process.env.VITEST !== 'true' ? 1 : 0
+      ];
       expect(select).not.to.have.class('Mui-disabled');
     });
 

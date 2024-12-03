@@ -89,6 +89,10 @@
       "enabled": false
     },
     {
+      "groupName": "Vitest",
+      "matchPackageNames": ["vitest", "@vitest/**", "vitest-*"]
+    },
+    {
       "groupName": "MUI Core",
       "matchPackageNames": [
         "@mui/icons-material",

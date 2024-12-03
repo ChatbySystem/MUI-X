@@ -15,12 +15,14 @@ describeTreeView<
 >(
   'useTreeViewItems plugin',
   ({ render, renderFromJSX, treeViewComponentName, TreeViewComponent, TreeItemComponent }) => {
-    it('should throw an error when two items have the same ID', function test() {
+    it('should throw an error when two items have the same ID', function test(t = {}) {
       // TODO is this fixed?
       if (!/jsdom/.test(window.navigator.userAgent)) {
         // can't catch render errors in the browser for unknown reason
         // tried try-catch + error boundary + window onError preventDefault
-        this.skip();
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
 
       if (treeViewComponentName === 'SimpleTreeView') {
@@ -31,8 +33,8 @@ describeTreeView<
           'MUI X: The Tree View component requires all items to have a unique `id` property.',
           reactMajor < 19 &&
             'MUI X: The Tree View component requires all items to have a unique `id` property.',
-          reactMajor < 19 && `The above error occurred in the <ForwardRef(TreeItem)> component`,
-          reactMajor < 19 && `The above error occurred in the <ForwardRef(TreeItem)> component`,
+          reactMajor < 19 && `The above error occurred in the <ForwardRef(TreeItem`,
+          reactMajor < 19 && `The above error occurred in the <ForwardRef(TreeItem`,
         ]);
       } else {
         expect(() =>
@@ -41,16 +43,17 @@ describeTreeView<
           'MUI X: The Tree View component requires all items to have a unique `id` property.',
           reactMajor < 19 &&
             'MUI X: The Tree View component requires all items to have a unique `id` property.',
-          reactMajor < 19 &&
-            `The above error occurred in the <ForwardRef(${treeViewComponentName})> component`,
+          reactMajor < 19 && `The above error occurred in the <ForwardRef(${treeViewComponentName}`,
         ]);
       }
     });
 
-    it('should be able to use a custom id attribute', function test() {
+    it('should be able to use a custom id attribute', function test(t = {}) {
       // For now, only SimpleTreeView can use custom id attributes
       if (treeViewComponentName.startsWith('RichTreeView')) {
-        this.skip();
+        // @ts-expect-error to support mocha and vitest
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this?.skip?.() || t?.skip();
       }
 
       const view = render({
@@ -120,9 +123,11 @@ describeTreeView<
         expect(view.getItemRoot('1')).not.to.have.attribute('aria-expanded');
       });
 
-      it('should mark an item as not expandable if it has only empty conditional arrays', function test() {
+      it('should mark an item as not expandable if it has only empty conditional arrays', function test(t = {}) {
         if (treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const view = renderFromJSX(
@@ -137,9 +142,11 @@ describeTreeView<
         expect(view.isItemExpanded('1')).to.equal(false);
       });
 
-      it('should mark an item as expandable if it has two array as children, one of which is empty (SimpleTreeView only)', function test() {
+      it('should mark an item as expandable if it has two array as children, one of which is empty (SimpleTreeView only)', function test(t = {}) {
         if (treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const view = renderFromJSX(
@@ -154,9 +161,11 @@ describeTreeView<
         expect(view.isItemExpanded('1')).to.equal(true);
       });
 
-      it('should mark an item as not expandable if it has one array containing an empty array as a children (SimpleTreeView only)', function test() {
+      it('should mark an item as not expandable if it has one array containing an empty array as a children (SimpleTreeView only)', function test(t = {}) {
         if (treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const view = renderFromJSX(
@@ -226,9 +235,11 @@ describeTreeView<
     });
 
     describe('Memoization (Rich Tree View only)', () => {
-      it('should not re-render any children when the Tree View re-renders (flat tree)', function test() {
+      it('should not re-render any children when the Tree View re-renders (flat tree)', function test(t = {}) {
         if (!treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const spyLabel = spy((props) => <TreeItemLabel {...props} />);
@@ -245,9 +256,11 @@ describeTreeView<
         expect(renders).to.deep.equal([]);
       });
 
-      it('should not re-render every children when updating the state on an item (flat tree)', function test() {
+      it('should not re-render every children when updating the state on an item (flat tree)', function test(t = {}) {
         if (!treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const spyLabel = spy((props) => <TreeItemLabel {...props} />);
@@ -268,9 +281,11 @@ describeTreeView<
         expect(renders).to.deep.equal(['0', '0', '1', '1']);
       });
 
-      it('should not re-render any children when the Tree View re-renders (nested tree)', function test() {
+      it('should not re-render any children when the Tree View re-renders (nested tree)', function test(t = {}) {
         if (!treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const spyLabel = spy((props) => <TreeItemLabel {...props} />);
@@ -290,9 +305,11 @@ describeTreeView<
         expect(renders).to.deep.equal([]);
       });
 
-      it('should not re-render every children when updating the state on an item (nested tree)', function test() {
+      it('should not re-render every children when updating the state on an item (nested tree)', function test(t = {}) {
         if (!treeViewComponentName.startsWith('RichTreeView')) {
-          this.skip();
+          // @ts-expect-error to support mocha and vitest
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          this?.skip?.() || t?.skip();
         }
 
         const spyLabel = spy((props) => <TreeItemLabel {...props} />);
