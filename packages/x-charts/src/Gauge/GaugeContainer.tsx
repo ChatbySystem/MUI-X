@@ -3,14 +3,14 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { ChartsSurface, ChartsSurfaceProps } from '../ChartsSurface';
-import { DrawingAreaProvider, DrawingAreaProviderProps } from '../context/DrawingAreaProvider';
 import { GaugeProvider, GaugeProviderProps } from './GaugeProvider';
-import { SizeProvider } from '../context/SizeProvider';
 import { ChartProvider } from '../context/ChartProvider';
+import { MergeSignaturesProperty } from '../internals/plugins/models';
+import { ChartCorePluginSignatures } from '../internals/plugins/corePlugins';
 
 export interface GaugeContainerProps
-  extends Omit<ChartsSurfaceProps, 'width' | 'height' | 'children'>,
-    Pick<DrawingAreaProviderProps, 'margin'>,
+  extends Omit<ChartsSurfaceProps, 'series' | 'width' | 'height' | 'children'>,
+    MergeSignaturesProperty<ChartCorePluginSignatures, 'params'>,
     Omit<GaugeProviderProps, 'children'>,
     React.SVGProps<SVGSVGElement> {
   /**
@@ -55,37 +55,40 @@ const GaugeContainer = React.forwardRef(function GaugeContainer(
   } = props;
 
   return (
-    <ChartProvider>
-      <SizeProvider width={inWidth} height={inHeight}>
-        <DrawingAreaProvider margin={{ left: 10, right: 10, top: 10, bottom: 10, ...margin }}>
-          <GaugeProvider
-            value={value}
-            valueMin={valueMin}
-            valueMax={valueMax}
-            startAngle={startAngle}
-            endAngle={endAngle}
-            outerRadius={outerRadius}
-            innerRadius={innerRadius}
-            cornerRadius={cornerRadius}
-            cx={cx}
-            cy={cy}
-          >
-            <ChartsSurface
-              title={title}
-              desc={desc}
-              disableAxisListener
-              role="meter"
-              aria-valuenow={value === null ? undefined : value}
-              aria-valuemin={valueMin}
-              aria-valuemax={valueMax}
-              {...other}
-              ref={ref}
-            >
-              <GStyled aria-hidden="true">{children}</GStyled>
-            </ChartsSurface>
-          </GaugeProvider>
-        </DrawingAreaProvider>
-      </SizeProvider>
+    <ChartProvider
+      pluginParams={{
+        width: inWidth,
+        height: inHeight,
+        margin: { left: 10, right: 10, top: 10, bottom: 10, ...margin },
+        series: [],
+      }}
+    >
+      <GaugeProvider
+        value={value}
+        valueMin={valueMin}
+        valueMax={valueMax}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        outerRadius={outerRadius}
+        innerRadius={innerRadius}
+        cornerRadius={cornerRadius}
+        cx={cx}
+        cy={cy}
+      >
+        <ChartsSurface
+          title={title}
+          desc={desc}
+          disableAxisListener
+          role="meter"
+          aria-valuenow={value === null ? undefined : value}
+          aria-valuemin={valueMin}
+          aria-valuemax={valueMax}
+          {...other}
+          ref={ref}
+        >
+          <GStyled aria-hidden="true">{children}</GStyled>
+        </ChartsSurface>
+      </GaugeProvider>
     </ChartProvider>
   );
 });
