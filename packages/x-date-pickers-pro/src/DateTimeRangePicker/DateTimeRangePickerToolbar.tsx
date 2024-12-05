@@ -24,6 +24,7 @@ import {
   getDateTimeRangePickerToolbarUtilityClass,
 } from './dateTimeRangePickerToolbarClasses';
 import { calculateRangeChange } from '../internals/utils/date-range-manager';
+import { DateTimeRangePickerView } from '../internals/models';
 
 const useUtilityClasses = (ownerState: DateTimeRangePickerToolbarProps) => {
   const { classes } = ownerState;
@@ -36,10 +37,8 @@ const useUtilityClasses = (ownerState: DateTimeRangePickerToolbarProps) => {
   return composeClasses(slots, getDateTimeRangePickerToolbarUtilityClass, classes);
 };
 
-type DateTimeRangeViews = Exclude<DateOrTimeViewWithMeridiem, 'year' | 'month'>;
-
 export interface DateTimeRangePickerToolbarProps
-  extends BaseToolbarProps<PickerRangeValue, DateTimeRangeViews>,
+  extends BaseToolbarProps<PickerRangeValue, DateTimeRangePickerView>,
     Pick<UseRangePositionResponse, 'rangePosition' | 'onRangePositionChange'>,
     ExportedDateTimeRangePickerToolbarProps {
   ampm?: boolean;
