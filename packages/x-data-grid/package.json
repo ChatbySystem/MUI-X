@@ -52,7 +52,8 @@
     "@mui/x-internals": "workspace:*",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1",
-    "reselect": "^5.1.1"
+    "reselect": "^5.1.1",
+    "use-sync-external-store": "^1.0.0"
   },
   "peerDependencies": {
     "@emotion/react": "^11.9.0",
@@ -77,6 +78,7 @@
     "@mui/system": "^5.16.8",
     "@mui/types": "^7.2.15",
     "@types/prop-types": "^15.7.13",
+    "@types/use-sync-external-store": "^0.0.6",
     "rimraf": "^6.0.1"
   },
   "engines": {

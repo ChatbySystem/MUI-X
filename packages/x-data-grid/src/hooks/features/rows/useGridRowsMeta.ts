@@ -1,5 +1,6 @@
 import * as React from 'react';
 import useLazyRef from '@mui/utils/useLazyRef';
+import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
 import { ResizeObserver } from '../../../utils/ResizeObserver';
 import { GridPrivateApiCommunity } from '../../../models/api/gridApiCommunity';
 import { GridRowsMetaApi, GridRowsMetaPrivateApi } from '../../../models/api/gridRowsMetaApi';
@@ -156,8 +157,15 @@ export const useGridRowsMeta = (
   const hydrateRowsMeta = React.useCallback(() => {
     hasRowWithAutoHeight.current = false;
 
-    pinnedRows.top.forEach(processHeightEntry);
-    pinnedRows.bottom.forEach(processHeightEntry);
+    const pinnedTopRowsTotalHeight = pinnedRows.top.reduce((acc, row) => {
+      const entry = processHeightEntry(row);
+      return acc + entry.content + entry.spacingTop + entry.spacingBottom + entry.detail;
+    }, 0);
+
+    const pinnedBottomRowsTotalHeight = pinnedRows.bottom.reduce((acc, row) => {
+      const entry = processHeightEntry(row);
+      return acc + entry.content + entry.spacingTop + entry.spacingBottom + entry.detail;
+    }, 0);
 
     const positions: number[] = [];
     const currentPageTotalHeight = currentPage.rows.reduce((acc, row) => {
@@ -180,6 +188,8 @@ export const useGridRowsMeta = (
         rowsMeta: {
           currentPageTotalHeight,
           positions,
+          pinnedTopRowsTotalHeight,
+          pinnedBottomRowsTotalHeight,
         },
       };
     });
@@ -254,7 +264,7 @@ export const useGridRowsMeta = (
 
   // The effect is used to build the rows meta data - currentPageTotalHeight and positions.
   // Because of variable row height this is needed for the virtualization
-  React.useEffect(() => {
+  useEnhancedEffect(() => {
     hydrateRowsMeta();
   }, [filterModel, paginationState, sortModel, hydrateRowsMeta]);
 

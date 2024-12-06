@@ -12,7 +12,6 @@ import type { GridPrivateApiCommunity } from '../../../models/api/gridApiCommuni
 import { useGridPrivateApiContext } from '../../utils/useGridPrivateApiContext';
 import { useGridRootProps } from '../../utils/useGridRootProps';
 import { useGridSelector } from '../../utils/useGridSelector';
-import { useRunOnce } from '../../utils/useRunOnce';
 import {
   gridVisibleColumnDefinitionsSelector,
   gridVisiblePinnedColumnDefinitionsSelector,
@@ -127,7 +126,6 @@ export const useGridVirtualScroller = () => {
   const rowsMeta = useGridSelector(apiRef, gridRowsMetaSelector);
   const selectedRowsLookup = useGridSelector(apiRef, selectedIdsLookupSelector);
   const currentPage = useGridVisibleRows(apiRef, rootProps);
-  const gridRootRef = apiRef.current.rootElementRef;
   const mainRef = apiRef.current.mainElementRef;
   const scrollerRef = apiRef.current.virtualScrollerRef;
   const scrollbarVerticalRef = apiRef.current.virtualScrollbarVerticalRef;
@@ -146,8 +144,8 @@ export const useGridVirtualScroller = () => {
 
       const initialRect = node.getBoundingClientRect();
       let lastSize = {
-        width: initialRect.width,
-        height: initialRect.height,
+        width: roundToSubPixel(initialRect.width),
+        height: roundToSubPixel(initialRect.height),
       };
 
       apiRef.current.publishEvent('resize', lastSize);
@@ -163,8 +161,8 @@ export const useGridVirtualScroller = () => {
         }
 
         const newSize = {
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
+          width: roundToSubPixel(entry.contentRect.width),
+          height: roundToSubPixel(entry.contentRect.height),
         };
 
         if (newSize.width === lastSize.width && newSize.height === lastSize.height) {
@@ -606,33 +604,10 @@ export const useGridVirtualScroller = () => {
   }, [apiRef, contentSize]);
 
   useEnhancedEffect(() => {
-    // TODO a scroll reset should not be necessary
-    if (enabledForColumns) {
-      scrollerRef.current!.scrollLeft = 0;
-    }
-    if (enabledForRows) {
-      scrollerRef.current!.scrollTop = 0;
-    }
-  }, [enabledForColumns, enabledForRows, gridRootRef, scrollerRef]);
-
-  useEnhancedEffect(() => {
     if (listView) {
       scrollerRef.current!.scrollLeft = 0;
     }
   }, [listView, scrollerRef]);
-
-  useRunOnce(outerSize.width !== 0, () => {
-    const inputs = inputsSelector(apiRef, rootProps, enabledForRows, enabledForColumns);
-
-    const initialRenderContext = computeRenderContext(inputs, scrollPosition.current, scrollCache);
-    updateRenderContext(initialRenderContext);
-
-    apiRef.current.publishEvent('scrollPositionChange', {
-      top: scrollPosition.current.top,
-      left: scrollPosition.current.left,
-      renderContext: initialRenderContext,
-    });
-  });
 
   apiRef.current.register('private', {
     updateRenderContext: forceUpdateRenderContext,
@@ -1108,4 +1083,8 @@ function bufferForDirection(
       // eslint unable to figure out enum exhaustiveness
       throw new Error('unreachable');
   }
+}
+
+function roundToSubPixel(value: number) {
+  return Math.round(value * 10) / 10;
 }

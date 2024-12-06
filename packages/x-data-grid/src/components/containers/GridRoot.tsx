@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   unstable_useForkRef as useForkRef,
-  unstable_useEnhancedEffect as useEnhancedEffect,
   unstable_capitalize as capitalize,
   unstable_composeClasses as composeClasses,
 } from '@mui/utils';
@@ -17,6 +16,7 @@ import { getDataGridUtilityClass } from '../../constants/gridClasses';
 import { gridDensitySelector } from '../../hooks/features/density/densitySelector';
 import { DataGridProcessedProps } from '../../models/props/DataGridProps';
 import { GridDensity } from '../../models/gridDensity';
+import { useIsSSR } from '../../hooks/utils/useIsSSR';
 
 export interface GridRootProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -56,13 +56,9 @@ const GridRoot = React.forwardRef<HTMLDivElement, GridRootProps>(function GridRo
 
   const classes = useUtilityClasses(ownerState, density);
 
-  // Our implementation of <NoSsr />
-  const [mountedState, setMountedState] = React.useState(false);
-  useEnhancedEffect(() => {
-    setMountedState(true);
-  }, []);
+  const isSSR = useIsSSR();
 
-  if (!mountedState) {
+  if (isSSR) {
     return null;
   }
 
